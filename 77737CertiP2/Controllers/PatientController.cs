@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ClinicLogic.Models;
+using ClinicLogic.Managers;
 
 namespace _77737CertiP2.Controllers
 {
@@ -8,69 +9,26 @@ namespace _77737CertiP2.Controllers
     [ApiController]
     public class PatientController : ControllerBase
     {
-        private static List<Patient> patients = new List<Patient>();
-
-        // Crear paciente (HTTP POST)
-        [HttpPost]
-        public IActionResult CreatePatient([FromBody] Patient patient)
+        public PatientController()
         {
-            if (patients.Any(p => p.CI == patient.CI))
-            {
-                return BadRequest("A patient with the same CI already exists.");
-            }
-
-            patient.BloodType = patient.RandomBloodType();
-            patients.Add(patient);
-            return Ok($"Patient {patient.FirstName} {patient.LastName} with CI {patient.CI} has been added.");
+            // Initialize the PatientManager here if needed
         }
 
-        // Actualizar paciente (HTTP PUT)
-        [HttpPut("{ci}")]
-        public IActionResult UpdatePatient(int ci, [FromBody] Patient updatedPatient)
-        {
-            var patient = patients.FirstOrDefault(p => p.CI == ci);
-            if (patient == null)
-            {
-                return NotFound("Patient not found.");
-            }
-
-            patient.FirstName = updatedPatient.FirstName;
-            patient.LastName = updatedPatient.LastName;
-            return Ok($"Patient with CI {ci} has been updated.");
-        }
-
-        // Eliminar paciente (HTTP DELETE)
-        [HttpDelete("{ci}")]
-        public IActionResult DeletePatient(int ci)
-        {
-            var patient = patients.FirstOrDefault(p => p.CI == ci);
-            if (patient == null)
-            {
-                return NotFound("Patient not found.");
-            }
-
-            patients.Remove(patient);
-            return Ok($"Patient with CI {ci} has been deleted.");
-        }
-
-        // Obtener todos los pacientes (HTTP GET)
         [HttpGet]
-        public IActionResult GetAllPatients()
+        [Route("{ci}")]
+        public Patient GetPatient(int ci)
         {
-            return Ok(patients);
-        }
-
-        // Obtener paciente por CI (HTTP GET/{ci})
-        [HttpGet("{ci}")]
-        public IActionResult GetPatientByCI(int ci)
-        {
-            var patient = patients.FirstOrDefault(p => p.CI == ci);
-            if (patient == null)
+            try
             {
-                return NotFound("Patient not found.");
+                PatientManager patient = new PatientManager();
+                var patientData = patient.GetPatient(ci);
+                return patientData;
             }
-
-            return Ok(patient);
+            catch (Exception ex)
+            {
+                return new Patient(0,"","");
+            }
         }
+
     }
 }

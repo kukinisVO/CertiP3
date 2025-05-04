@@ -8,7 +8,12 @@ namespace ClinicLogic.Managers
 
         public PatientManager()
         {
-            listPatients = new List<Patient>();
+            listPatients = new List<Patient>()
+            {
+                new Patient(1, "John", "Doe"),
+                new Patient(2, "Jane", "Smith"),
+                new Patient(3, "Alice", "Johnson"),
+            };
         }
 
         public List<Patient> GetPatients()

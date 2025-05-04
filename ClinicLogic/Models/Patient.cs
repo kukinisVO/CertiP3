@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ClinicLogic.Models
 {
-    internal class Patient
+    public class Patient
     {
-        string[] bloodType = new string[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" };
         public int CI { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -24,6 +23,7 @@ namespace ClinicLogic.Models
         // put randomized blood type
         public string RandomBloodType()
         {
+            string[] bloodType = new string[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" };
             Random random = new Random();
             int index = random.Next(bloodType.Length);
             return bloodType[index];

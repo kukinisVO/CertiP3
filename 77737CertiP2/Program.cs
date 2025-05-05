@@ -1,5 +1,6 @@
 using ClinicLogic.Models;
 using ClinicLogic.Managers;
+using Services.GiftServices.Managers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.Configure<AppConfig>(
         builder.Configuration.GetSection("AppConfig"));
 
 builder.Services.AddSingleton<PatientManager>();
+builder.Services.AddSingleton<GiftManager>();
 
 var app = builder.Build();
 

@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "77737CertiP2", "77737CertiP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicLogic", "ClinicLogic\ClinicLogic.csproj", "{0B2A5536-50DB-463D-B39E-D05A2083109A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{8AD2BDFE-441B-435A-B369-CCA74CAA9B3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{0B2A5536-50DB-463D-B39E-D05A2083109A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B2A5536-50DB-463D-B39E-D05A2083109A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B2A5536-50DB-463D-B39E-D05A2083109A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AD2BDFE-441B-435A-B369-CCA74CAA9B3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AD2BDFE-441B-435A-B369-CCA74CAA9B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AD2BDFE-441B-435A-B369-CCA74CAA9B3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AD2BDFE-441B-435A-B369-CCA74CAA9B3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

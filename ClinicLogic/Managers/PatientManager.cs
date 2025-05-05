@@ -13,7 +13,7 @@ namespace ClinicLogic.Managers
         }
 
         public string GetFilePath() => _config.PatientsFilePath;
-        // Helper: Read all patients using StreamReader
+        // Helper, lee el archivo entero y devuelve una lista de pacientes
         private List<Patient> ReadAllPatients()
         {
             var patients = new List<Patient>();
@@ -36,7 +36,7 @@ namespace ClinicLogic.Managers
             return patients;
         }
 
-        // Helper: Save all patients using StreamWriter
+        // Helpeer, guarda todos los pacientes de una lista de pacientes
         private void SaveAllPatients(List<Patient> patients)
         {
             using (var writer = new StreamWriter(_config.PatientsFilePath))
@@ -48,7 +48,6 @@ namespace ClinicLogic.Managers
             }
         }
 
-        // CREATE
         public void AddPatient(Patient patient)
         {
             var patients = ReadAllPatients();
@@ -62,7 +61,6 @@ namespace ClinicLogic.Managers
             }
         }
 
-        // READ (Single)
         public Patient GetPatient(string ci)
         {
             using (var reader = new StreamReader(_config.PatientsFilePath))
@@ -85,7 +83,6 @@ namespace ClinicLogic.Managers
             throw new Exception("Patient not found");
         }
 
-        // UPDATE
         public void UpdatePatient(string ci, Patient updatedPatient)
         {
             var patients = ReadAllPatients();
@@ -99,7 +96,6 @@ namespace ClinicLogic.Managers
             SaveAllPatients(patients);
         }
 
-        // DELETE
         public void DeletePatient(string ci)
         {
             var patients = ReadAllPatients();
@@ -112,7 +108,6 @@ namespace ClinicLogic.Managers
             SaveAllPatients(patients);
         }
 
-        // READ (All)
         public List<Patient> GetPatients()
         {
             return ReadAllPatients();

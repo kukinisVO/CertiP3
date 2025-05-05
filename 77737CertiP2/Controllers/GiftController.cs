@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using ClinicLogic.Models;
 using Services.GiftServices.Managers;
 using Services.GiftServices.Models;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace _77737CertiP2.Controllers
 {
@@ -18,7 +20,7 @@ namespace _77737CertiP2.Controllers
             _url = _manager.GetUrl();
         }
 
-        [HttpGet("gifts/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetGiftById(string id)
         {
             try
@@ -27,18 +29,23 @@ namespace _77737CertiP2.Controllers
                 var response = await client.GetAsync($"{_url}/{id}");
 
                 if (!response.IsSuccessStatusCode)
-                {
                     return NotFound($"Gift with ID {id} not found");
-                }
 
-                var gift = await response.Content.ReadFromJsonAsync<Gift>();
+                // Manual deserialization for flexible handling
+                var json = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    NumberHandling = JsonNumberHandling.AllowReadingFromString
+                };
+
+                var gift = JsonSerializer.Deserialize<Gift>(json, options);
                 return Ok(gift);
             }
             catch (Exception ex)
             {
-                // Log the error (implementation depends on your logging setup)
-                Console.WriteLine($"Error retrieving gift: {ex.Message}");
-                return StatusCode(500, "Error retrieving gift");
+                Console.WriteLine($"Error retrieving gift {id}: {ex.Message}");
+                return StatusCode(500, "Error processing gift data");
             }
         }
     }

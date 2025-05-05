@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Services.GiftServices.Models
@@ -10,6 +11,6 @@ namespace Services.GiftServices.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public Dictionary<string, string> Data { get; set; }
+        public JsonElement Data { get; set; } // Flexible handling
     }
 }

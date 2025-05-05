@@ -2,3 +2,11 @@
 2025-05-05 01:54:26 [Information] Patient added successfully: Patient { CI: "4", Name: "asd", LastName: "dsa", BloodType: "string" }
 2025-05-05 01:55:01 [Information] Patient updated successfully: Patient { CI: "4", Name: "qwe", LastName: "ewq", BloodType: "C+" }
 2025-05-05 01:55:19 [Information] Patient deleted successfully: "4"
+2025-05-05 17:43:54 [Information] Gift retrieved successfully: Gift { Id: "2", Name: "Apple iPhone 12 Mini, 256GB, Blue", Data: JsonElement { ValueKind: Null } }
+2025-05-05 17:50:59 [Information] Gift retrieved successfully: Gift { Id: "2", Name: "Apple iPhone 12 Mini, 256GB, Blue", Data: JsonElement { ValueKind: Null } }
+2025-05-05 17:51:44 [Information] Gift "2" given to patient "1"
+2025-05-05 17:52:28 [Information] Gift retrieved successfully: Gift { Id: "2", Name: "Apple iPhone 12 Mini, 256GB, Blue", Data: JsonElement { ValueKind: Null } }
+2025-05-05 17:52:28 [Information] Gift "2" given to patient "2"
+2025-05-05 17:55:12 [Information] All gifts retrieved successfully
+2025-05-05 17:56:59 [Information] All users retrieved successfully
+2025-05-05 17:59:07 [Information] Gifts retrieved successfully for user "1"

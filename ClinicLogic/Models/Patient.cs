@@ -8,25 +8,24 @@ namespace ClinicLogic.Models
 {
     public class Patient
     {
-        public int CI { get; set; }
-        public string FirstName { get; set; }
+        public string CI { get; set; }
+        public string Name { get; set; }
         public string LastName { get; set; }
         public string BloodType { get; set; }
-        public Patient(int ci, string firstName, string lastName)
+
+        public Patient(string ci, string name, string lastName)
         {
             CI = ci;
-            FirstName = firstName;
+            Name = name;
             LastName = lastName;
             BloodType = RandomBloodType();
         }
 
-        // put randomized blood type
-        public string RandomBloodType()
+        private string RandomBloodType()
         {
-            string[] bloodType = new string[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" };
+            string[] bloodTypes = { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" };
             Random random = new Random();
-            int index = random.Next(bloodType.Length);
-            return bloodType[index];
+            return bloodTypes[random.Next(bloodTypes.Length)];
         }
     }
 }

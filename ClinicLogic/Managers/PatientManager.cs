@@ -1,61 +1,121 @@
 ﻿using ClinicLogic.Models;
+using Microsoft.Extensions.Options;
 
 namespace ClinicLogic.Managers
 {
     public class PatientManager
     {
-        private List<Patient> listPatients = new List<Patient>();
+        private readonly AppConfig _config;
 
-        public PatientManager()
+        public PatientManager(IOptions<AppConfig> config)
         {
-            listPatients = new List<Patient>()
+            _config = config.Value;
+        }
+
+        public string GetFilePath() => _config.PatientsFilePath;
+        // Helper: Read all patients using StreamReader
+        private List<Patient> ReadAllPatients()
+        {
+            var patients = new List<Patient>();
+
+            using (var reader = new StreamReader(_config.PatientsFilePath))
             {
-                new Patient(1, "John", "Doe"),
-                new Patient(2, "Jane", "Smith"),
-                new Patient(3, "Alice", "Johnson"),
-            };
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    var parts = line.Split(',');
+                    patients.Add(new Patient(parts[2], parts[0], parts[1])
+                    {
+                        BloodType = parts[3]
+                    });
+                }
+            }
+
+            return patients;
         }
 
-        public List<Patient> GetPatients()
+        // Helper: Save all patients using StreamWriter
+        private void SaveAllPatients(List<Patient> patients)
         {
-            return listPatients;
+            using (var writer = new StreamWriter(_config.PatientsFilePath))
+            {
+                foreach (var patient in patients)
+                {
+                    writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType}");
+                }
+            }
         }
 
+        // CREATE
         public void AddPatient(Patient patient)
         {
-            if (listPatients.Any(p => p.CI == patient.CI))
+            var patients = ReadAllPatients();
+
+            if (patients.Any(p => p.CI == patient.CI))
+                throw new Exception("Patient with this CI already exists");
+
+            using (var writer = File.AppendText(_config.PatientsFilePath))
             {
-                throw new Exception("A patient with the same CI already exists.");
+                writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType}");
             }
-            listPatients.Add(patient);
         }
-        public void UpdatePatient(int ci, Patient updatedPatient)
+
+        // READ (Single)
+        public Patient GetPatient(string ci)
         {
-            var patient = listPatients.FirstOrDefault(p => p.CI == ci);
-            if (patient == null)
+            using (var reader = new StreamReader(_config.PatientsFilePath))
             {
-                throw new Exception("Patient not found.");
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    var parts = line.Split(',');
+                    if (parts[2] == ci)
+                    {
+                        return new Patient(parts[2], parts[0], parts[1])
+                        {
+                            BloodType = parts[3]
+                        };
+                    }
+                }
             }
-            patient.FirstName = updatedPatient.FirstName;
+            throw new Exception("Patient not found");
+        }
+
+        // UPDATE
+        public void UpdatePatient(string ci, Patient updatedPatient)
+        {
+            var patients = ReadAllPatients();
+            var patient = patients.FirstOrDefault(p => p.CI == ci);
+
+            if (patient == null)
+                throw new Exception("Patient not found");
+
+            patient.Name = updatedPatient.Name;
             patient.LastName = updatedPatient.LastName;
+            SaveAllPatients(patients);
         }
-        public void DeletePatient(int ci)
+
+        // DELETE
+        public void DeletePatient(string ci)
         {
-            var patient = listPatients.FirstOrDefault(p => p.CI == ci);
+            var patients = ReadAllPatients();
+            var patient = patients.FirstOrDefault(p => p.CI == ci);
+
             if (patient == null)
-            {
-                throw new Exception("Patient not found.");
-            }
-            listPatients.Remove(patient);
+                throw new Exception("Patient not found");
+
+            patients.Remove(patient);
+            SaveAllPatients(patients);
         }
-        public Patient GetPatient(int ci)
+
+        // READ (All)
+        public List<Patient> GetPatients()
         {
-            var patient = listPatients.FirstOrDefault(p => p.CI == ci);
-            if (patient == null)
-            {
-                throw new Exception("Patient not found.");
-            }
-            return patient;
+            return ReadAllPatients();
         }
 
     }

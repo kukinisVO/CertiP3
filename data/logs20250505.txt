@@ -1,0 +1,4 @@
+2025-05-05 01:53:42 [Information] Gift retrieved successfully: Gift { Id: "1", Name: "Google Pixel 6 Pro", Data: JsonElement { ValueKind: Object } }
+2025-05-05 01:54:26 [Information] Patient added successfully: Patient { CI: "4", Name: "asd", LastName: "dsa", BloodType: "string" }
+2025-05-05 01:55:01 [Information] Patient updated successfully: Patient { CI: "4", Name: "qwe", LastName: "ewq", BloodType: "C+" }
+2025-05-05 01:55:19 [Information] Patient deleted successfully: "4"

@@ -12,5 +12,12 @@ namespace Services.GiftServices.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public JsonElement Data { get; set; } // Flexible handling
+
+        public Gift(string id, string name, JsonElement data)
+        {
+            Id = id;
+            Name = name;
+            Data = data;
+        }
     }
 }

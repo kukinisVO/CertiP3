@@ -1,8 +1,15 @@
 using ClinicLogic.Models;
 using ClinicLogic.Managers;
 using Services.GiftServices.Managers;
+using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
+//logger
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -12,9 +19,10 @@ builder.Services.AddSwaggerGen();
 // Configure AppConfig
 builder.Services.Configure<AppConfig>(
         builder.Configuration.GetSection("AppConfig"));
-
+//Singleton for Controller Constructor
 builder.Services.AddSingleton<PatientManager>();
 builder.Services.AddSingleton<GiftManager>();
+
 
 var app = builder.Build();
 

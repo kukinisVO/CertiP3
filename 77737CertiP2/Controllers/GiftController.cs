@@ -5,6 +5,7 @@ using Services.GiftServices.Managers;
 using Services.GiftServices.Models;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Serilog;
 
 namespace _77737CertiP2.Controllers
 {
@@ -40,11 +41,12 @@ namespace _77737CertiP2.Controllers
                 };
 
                 var gift = JsonSerializer.Deserialize<Gift>(json, options);
+                Log.Information("Gift retrieved successfully: {@Gift}", gift);
                 return Ok(gift);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error retrieving gift {id}: {ex.Message}");
+                Log.Error(ex, "Error retrieving gift");
                 return StatusCode(500, "Error processing gift data");
             }
         }

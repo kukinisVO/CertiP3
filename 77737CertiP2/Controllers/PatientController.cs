@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ClinicLogic.Models;
 using ClinicLogic.Managers;
+using Serilog.Core;
+using Serilog;
 
 namespace _77737CertiP2.Controllers
 {
@@ -16,19 +18,6 @@ namespace _77737CertiP2.Controllers
             _patientManager = patienntManager;
         }
 
-        [HttpGet("config-diagnostics")]
-        public IActionResult CheckConfig()
-        {
-            var fullPath = Path.GetFullPath(_patientManager.GetFilePath()); // Ensure System.IO is used explicitly
-            return Ok(new
-            {
-                ConfigValue = _patientManager.GetFilePath(),
-                AbsolutePath = fullPath,
-                FileExists = System.IO.File.Exists(fullPath), // Ensure System.IO is used explicitly
-                Directory = Path.GetDirectoryName(fullPath) // Ensure System.IO is used explicitly
-            });
-        }
-
         [HttpPost]
         [Route("{ci}")]
         public Patient PostPatient([FromBody] Patient patient) // Directly use Patient model
@@ -36,10 +25,12 @@ namespace _77737CertiP2.Controllers
             try
             {
                 _patientManager.AddPatient(patient);
+                Log.Information("Patient added successfully: {@Patient}", patient);
                 return patient;
             }
             catch (Exception ex)
             {
+                Log.Error(ex, "Error adding patient");
                 return new Patient("0", "NULL", "NULL");
             }
         }
@@ -54,6 +45,7 @@ namespace _77737CertiP2.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error(ex, "Error retrieving patient");
                 return new Patient("0", "NULL", "NULL");
             }
         }
@@ -64,10 +56,12 @@ namespace _77737CertiP2.Controllers
             try
             {
                 _patientManager.UpdatePatient(ci, updatedPatient);
+                Log.Information("Patient updated successfully: {@Patient}", updatedPatient);
                 return updatedPatient;
             }
             catch (Exception ex)
             {
+                Log.Error(ex, "Error updating patient");
                 return new Patient("0", "NULL", "NULL");
             }
         }
@@ -78,10 +72,12 @@ namespace _77737CertiP2.Controllers
             try
             {
                 _patientManager.DeletePatient(ci);
+                Log.Information("Patient deleted successfully: {CI}", ci);
                 return new Patient("0", "NULL", "NULL");
             }
             catch (Exception ex)
             {
+                Log.Error(ex, "Error deleting patient");
                 return new Patient("0", "NULL", "NULL");
             }
         }
@@ -96,6 +92,7 @@ namespace _77737CertiP2.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error(ex, "Error retrieving patients");
                 return new List<Patient>() { new Patient("0", "LISTA", "VACIA") };
             }
         }

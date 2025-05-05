@@ -1,11 +1,20 @@
+using ClinicLogic.Models;
+using ClinicLogic.Managers;
+using Services.GiftServices.Managers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Configure AppConfig
+builder.Services.Configure<AppConfig>(
+        builder.Configuration.GetSection("AppConfig"));
+
+builder.Services.AddSingleton<PatientManager>();
+builder.Services.AddSingleton<GiftManager>();
 
 var app = builder.Build();
 

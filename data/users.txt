@@ -1,0 +1,2 @@
+1|{"Id":"1","Name":"Google Pixel 6 Pro","Data":{"color":"Cloudy White","capacity":"128 GB"}};{"Id":"2","Name":"Apple iPhone 12 Mini, 256GB, Blue","Data":null}
+2|{"Id":"2","Name":"Apple iPhone 12 Mini, 256GB, Blue","Data":null}

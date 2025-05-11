@@ -1,5 +1,7 @@
 ﻿using ClinicLogic.Models;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace ClinicLogic.Managers
 {
@@ -13,6 +15,7 @@ namespace ClinicLogic.Managers
         }
 
         public string GetFilePath() => _config.PatientsFilePath;
+        public string GetProject3ApiUrl() => _config.Project3ApiUrl;
         // Helper, lee el archivo entero y devuelve una lista de pacientes
         private List<Patient> ReadAllPatients()
         {
@@ -26,10 +29,14 @@ namespace ClinicLogic.Managers
                     if (string.IsNullOrWhiteSpace(line)) continue;
 
                     var parts = line.Split(',');
+
                     patients.Add(new Patient(parts[2], parts[0], parts[1])
                     {
-                        BloodType = parts[3]
+                        BloodType = parts[3],
+                        PatientID = parts.Length > 4 ? parts[4].Trim() : null
                     });
+
+
                 }
             }
 
@@ -43,7 +50,7 @@ namespace ClinicLogic.Managers
             {
                 foreach (var patient in patients)
                 {
-                    writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType}");
+                    writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType}, {patient.PatientID}");
                 }
             }
         }
@@ -55,9 +62,12 @@ namespace ClinicLogic.Managers
             if (patients.Any(p => p.CI == patient.CI))
                 throw new Exception("Patient with this CI already exists");
 
+            
+            patient.PatientID = GeneratePatientID(patient.Name, patient.LastName, patient.CI).Result;
+
             using (var writer = File.AppendText(_config.PatientsFilePath))
             {
-                writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType}");
+                writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType}, {patient.PatientID}");
             }
         }
 
@@ -75,7 +85,8 @@ namespace ClinicLogic.Managers
                     {
                         return new Patient(parts[2], parts[0], parts[1])
                         {
-                            BloodType = parts[3]
+                            BloodType = parts[3],
+                            PatientID = parts.Length > 4 ? parts[4].Trim() : null
                         };
                     }
                 }
@@ -113,5 +124,44 @@ namespace ClinicLogic.Managers
             return ReadAllPatients();
         }
 
+        public async Task<string> GeneratePatientID(string name, string lastName, string ci)
+        {
+            
+
+            try
+            {
+                string url =  GetProject3ApiUrl() + "/api/patients/generateid";
+                var patient = new Patient(name, lastName, ci);
+
+               
+                string json = JsonConvert.SerializeObject(patient);
+                HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.PostAsync(url, content);
+
+               
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+
+           
+               string? patientCode = JsonConvert.DeserializeObject<string>(responseBody);
+                if (patientCode == null)
+                {
+                    
+                    throw new InvalidOperationException("La respuesta deserializada es nula.");
+                }
+
+                return patientCode;
+
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
+
+        }
     }
 }

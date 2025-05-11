@@ -130,7 +130,7 @@ namespace ClinicLogic.Managers
 
             try
             {
-                string url =  GetProject3ApiUrl() + "/api/patients/generateid";
+                string url =  GetProject3ApiUrl() + "api/patientcode";
                 var patient = new Patient(name, lastName, ci);
 
                

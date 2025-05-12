@@ -19,12 +19,13 @@ namespace _77737CertiP2.Controllers
         }
 
         [HttpPost]
-        [Route("{ci}")]
-        public Patient PostPatient([FromBody] Patient patient) // Directly use Patient model
+        [Route("")]
+        public async Task<Patient> PostPatient([FromBody] Patient patient) // Directly use Patient model
         {
             try
             {
-                _patientManager.AddPatient(patient);
+                patient = await _patientManager.AddPatient(patient);
+                
                 Log.Information("Patient added successfully: {@Patient}", patient);
                 return patient;
             }

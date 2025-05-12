@@ -55,21 +55,21 @@ namespace ClinicLogic.Managers
             }
         }
 
-        public void AddPatient(Patient patient)
+        public async Task AddPatient(Patient patient)
         {
             var patients = ReadAllPatients();
 
             if (patients.Any(p => p.CI == patient.CI))
                 throw new Exception("Patient with this CI already exists");
 
-            
-            patient.PatientID = GeneratePatientID(patient.Name, patient.LastName, patient.CI).Result;
+            patient.PatientID = await GeneratePatientID(patient.Name, patient.LastName, patient.CI);
 
             using (var writer = File.AppendText(_config.PatientsFilePath))
             {
-                writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType}, {patient.PatientID}");
+                writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType},{patient.PatientID}");
             }
         }
+
 
         public Patient GetPatient(string ci)
         {
@@ -130,30 +130,28 @@ namespace ClinicLogic.Managers
 
             try
             {
-                string url =  GetProject3ApiUrl() + "api/patientcode";
-                var patient = new Patient(name, lastName, ci);
 
-               
+                var patient = new Patient(ci, name, lastName);
                 string json = JsonConvert.SerializeObject(patient);
                 HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.PostAsync(url, content);
-
-               
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-
-           
-               string? patientCode = JsonConvert.DeserializeObject<string>(responseBody);
-                if (patientCode == null)
+                HttpClient client = new HttpClient
                 {
-                    
+                    BaseAddress = new Uri("http://localhost:5133") 
+                };
+
+                HttpResponseMessage response = await client.PostAsync("api/patientcode", content);
+                response.EnsureSuccessStatusCode();
+
+                string responseBody = await response.Content.ReadAsStringAsync();
+                string? patientCode = responseBody;
+
+                if (patientCode == null)
                     throw new InvalidOperationException("La respuesta deserializada es nula.");
-                }
 
                 return patientCode;
+
+             
 
             }
             catch (Exception ex)

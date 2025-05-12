@@ -54,3 +54,6 @@ System.AggregateException: One or more errors occurred. (An invalid request URI 
 System.Exception: Patient not found
    at ClinicLogic.Managers.PatientManager.GetPatient(String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 94
    at _77737CertiP2.Controllers.PatientController.GetPatient(String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 43
+2025-05-11 20:53:41 [Information] Patient added successfully: Patient { CI: "1200", Name: "YO", LastName: "tu", BloodType: "string", PatientID: "string" }
+2025-05-11 20:58:40 [Information] Patient added successfully: Patient { CI: "444", Name: "A", LastName: "B", BloodType: "string", PatientID: "string" }
+2025-05-11 21:00:24 [Information] Patient added successfully: Patient { CI: "777", Name: "Vegetta", LastName: "Willy", BloodType: "string", PatientID: "string" }

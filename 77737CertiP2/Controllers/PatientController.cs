@@ -24,7 +24,8 @@ namespace _77737CertiP2.Controllers
         {
             try
             {
-                await _patientManager.AddPatient(patient);
+                patient = await _patientManager.AddPatient(patient);
+                
                 Log.Information("Patient added successfully: {@Patient}", patient);
                 return patient;
             }

@@ -23,7 +23,7 @@ namespace ClinicLogic.Models
             
         }
 
-        private string RandomBloodType()
+        public string RandomBloodType()
         {
             string[] bloodTypes = { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" };
             Random random = new Random();

@@ -55,19 +55,20 @@ namespace ClinicLogic.Managers
             }
         }
 
-        public async Task AddPatient(Patient patient)
+        public async Task<Patient> AddPatient(Patient patient)
         {
             var patients = ReadAllPatients();
 
             if (patients.Any(p => p.CI == patient.CI))
                 throw new Exception("Patient with this CI already exists");
 
-            patient.PatientID = await GeneratePatientID(patient.Name, patient.LastName, patient.CI);
+            patient= await GeneratePatientID(patient.Name, patient.LastName, patient.CI);
 
             using (var writer = File.AppendText(_config.PatientsFilePath))
             {
                 writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType},{patient.PatientID}");
             }
+            return patient;
         }
 
 
@@ -124,7 +125,7 @@ namespace ClinicLogic.Managers
             return ReadAllPatients();
         }
 
-        public async Task<string> GeneratePatientID(string name, string lastName, string ci)
+        public async Task<Patient> GeneratePatientID(string name, string lastName, string ci)
         {
             
 
@@ -149,7 +150,8 @@ namespace ClinicLogic.Managers
                 if (patientCode == null)
                     throw new InvalidOperationException("La respuesta deserializada es nula.");
 
-                return patientCode;
+                patient.PatientID = patientCode;
+                return patient;
 
              
 

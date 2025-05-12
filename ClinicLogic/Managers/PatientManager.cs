@@ -1,6 +1,7 @@
 ﻿using ClinicLogic.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Serilog;
 using System.Text;
 
 namespace ClinicLogic.Managers
@@ -35,11 +36,11 @@ namespace ClinicLogic.Managers
                         BloodType = parts[3],
                         PatientID = parts.Length > 4 ? parts[4].Trim() : null
                     });
-
+                    Log.Information($"Paciente leído: {parts[0]} {parts[1]} con CI {parts[2]}, tipo de sangre {parts[3]} y PatientID {parts[4]}.");
 
                 }
             }
-
+            Log.Information($"Pacientes leídos del archivo {_config.PatientsFilePath}.");
             return patients;
         }
 
@@ -51,8 +52,10 @@ namespace ClinicLogic.Managers
                 foreach (var patient in patients)
                 {
                     writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType}, {patient.PatientID}");
+                    Log.Information($"Paciente guardado: {patient.Name} {patient.LastName} con CI {patient.CI}, tipo de sangre {patient.BloodType} y PatientID {patient.PatientID}.");
                 }
             }
+            Log.Information($"Pacientes guardados en el archivo {_config.PatientsFilePath}.");
         }
 
         public async Task<Patient> AddPatient(Patient patient)
@@ -68,12 +71,14 @@ namespace ClinicLogic.Managers
             {
                 writer.WriteLine($"{patient.Name},{patient.LastName},{patient.CI},{patient.BloodType},{patient.PatientID}");
             }
+            Log.Information($"Paciente {patient.Name} {patient.LastName} con CI {patient.CI} agregado con éxito.");
             return patient;
         }
 
 
         public Patient GetPatient(string ci)
         {
+            Log.Information($"Buscando paciente con CI {ci} en el archivo {_config.PatientsFilePath}");
             using (var reader = new StreamReader(_config.PatientsFilePath))
             {
                 string line;
@@ -84,6 +89,7 @@ namespace ClinicLogic.Managers
                     var parts = line.Split(',');
                     if (parts[2] == ci)
                     {
+                        Log.Information($"Paciente encontrado: {parts[0]} {parts[1]} con CI {parts[2]}, tipo de sangre {parts[3]} y PatientID {parts[4]}.");
                         return new Patient(parts[2], parts[0], parts[1])
                         {
                             BloodType = parts[3],
@@ -92,6 +98,7 @@ namespace ClinicLogic.Managers
                     }
                 }
             }
+            Log.Error($"No se encontró el paciente con CI {ci} en el archivo {_config.PatientsFilePath}");
             throw new Exception("Patient not found");
         }
 
@@ -101,10 +108,15 @@ namespace ClinicLogic.Managers
             var patient = patients.FirstOrDefault(p => p.CI == ci);
 
             if (patient == null)
+            {
+                Log.Error($"No se encontró el paciente con CI {ci} para actualizar.");
                 throw new Exception("Patient not found");
-
+            }
+              
+            Log.Information($"Actualizando paciente {patient.Name} {patient.LastName} con CI {ci}");
             patient.Name = updatedPatient.Name;
             patient.LastName = updatedPatient.LastName;
+            Log.Information($"Paciente actualizado: {patient.Name} {patient.LastName} con CI {ci}");
             SaveAllPatients(patients);
         }
 
@@ -114,8 +126,12 @@ namespace ClinicLogic.Managers
             var patient = patients.FirstOrDefault(p => p.CI == ci);
 
             if (patient == null)
+            {
+                Log.Error($"No se encontró el paciente con CI {ci} para eliminar.");
                 throw new Exception("Patient not found");
-
+            }
+                
+            Log.Information($"Eliminando paciente {patient.Name} {patient.LastName} con CI {ci}");
             patients.Remove(patient);
             SaveAllPatients(patients);
         }
@@ -128,7 +144,7 @@ namespace ClinicLogic.Managers
         public async Task<Patient> GeneratePatientID(string name, string lastName, string ci)
         {
             
-
+            Log.Information($"Generando PatientID para {name} {lastName} con CI {ci}");
             try
             {
 
@@ -148,9 +164,14 @@ namespace ClinicLogic.Managers
                 string? patientCode = responseBody;
 
                 if (patientCode == null)
+                {
+                    Log.Error("La respuesta del servidor es nula.");
                     throw new InvalidOperationException("La respuesta deserializada es nula.");
+                }
+                    
 
                 patient.PatientID = patientCode;
+                Log.Information($"PatientID generado: {patient.PatientID}");
                 return patient;
 
              
@@ -158,7 +179,7 @@ namespace ClinicLogic.Managers
             }
             catch (Exception ex)
             {
-                
+                Log.Error($"Error al generar PatientID: {ex.Message}");
                 throw;
             }
 

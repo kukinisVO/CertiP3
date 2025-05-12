@@ -66,3 +66,8 @@ System.Exception: Patient with this CI already exists
    at _77737CertiP2.Controllers.PatientController.PostPatient(Patient patient) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 27
 2025-05-11 21:36:04 [Information] Patient added successfully: Patient { CI: "999", Name: "fffff", LastName: "aaaa", BloodType: "string", PatientID: "fa-999" }
 2025-05-11 21:43:19 [Information] Patient added successfully: Patient { CI: "2222", Name: "Bruno", LastName: "Mars", BloodType: "AB+", PatientID: "BM-2222" }
+2025-05-11 22:37:22 [Error] Error adding patient
+System.Exception: Patient with this CI already exists
+   at ClinicLogic.Managers.PatientManager.AddPatient(Patient patient) in D:\AAAcollegee\certificacion\practica3\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 63
+   at _77737CertiP2.Controllers.PatientController.PostPatient(Patient patient) in D:\AAAcollegee\certificacion\practica3\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 27
+2025-05-11 22:37:37 [Information] Patient added successfully: Patient { CI: "4", Name: "gfds", LastName: "sdfg", BloodType: "AB+", PatientID: "gs-4" }

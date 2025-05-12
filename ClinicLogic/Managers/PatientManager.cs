@@ -138,7 +138,7 @@ namespace ClinicLogic.Managers
 
                 HttpClient client = new HttpClient
                 {
-                    BaseAddress = new Uri("http://localhost:5133") 
+                    BaseAddress = new Uri(_config.Project3ApiUrl) 
                 };
 
                 HttpResponseMessage response = await client.PostAsync("api/patientcode", content);

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using ClinicLogic.Models;
 using Services.GiftServices.Models;
 using System.Text.Json;
+using Serilog;
 
 namespace Services.GiftServices.Managers
 {
@@ -101,8 +102,10 @@ namespace Services.GiftServices.Managers
             var users = ReadAllUsers();
 
             if (users.Any(u => u.Id == user.Id))
+            {
+                Log.Information($"User with ID {user.Id} already exists");
                 throw new Exception($"User with ID {user.Id} already exists");
-
+            }
             users.Add(user);
             SaveAllUsers(users);
         }
@@ -110,6 +113,7 @@ namespace Services.GiftServices.Managers
         public User GetUser(string id)
         {
             var users = ReadAllUsers();
+            Log.Information($"Searching for user with ID {id}");
             return users.FirstOrDefault(u => u.Id == id)
                    ?? throw new Exception($"User {id} not found");
         }
@@ -120,10 +124,13 @@ namespace Services.GiftServices.Managers
             var index = users.FindIndex(u => u.Id == id);
 
             if (index == -1)
+            {
+                Log.Error($"User {id} not found");
                 throw new Exception($"User {id} not found");
-
+            }
             users[index] = updatedUser;
             SaveAllUsers(users);
+
         }
 
         public void DeleteUser(string id)
@@ -132,10 +139,13 @@ namespace Services.GiftServices.Managers
             var user = users.FirstOrDefault(u => u.Id == id);
 
             if (user == null)
+            {
+                Log.Error($"User {id} not found");
                 throw new Exception($"User {id} not found");
-
+            }
             users.Remove(user);
             SaveAllUsers(users);
+
         }
 
         public void AddGiftToUser(string userId, Gift gift)
@@ -147,9 +157,12 @@ namespace Services.GiftServices.Managers
             {
                 var patient = ReadAllPatients().FirstOrDefault(p => p.CI == userId);
                 if (patient == null)
+                {
+                    Log.Error($"Patient {userId} not found");
                     throw new Exception($"Patient {userId} not found");
+                }
                 user = new User(patient);
-                users.Add(user);
+
             }
             user.gifts.Add(gift);
             SaveAllUsers(users);

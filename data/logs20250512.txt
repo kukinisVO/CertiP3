@@ -1,0 +1,15 @@
+2025-05-12 18:55:04 [Error] Error retrieving patients
+System.IndexOutOfRangeException: Index was outside the bounds of the array.
+   at ClinicLogic.Managers.PatientManager.ReadAllPatients() in C:\Users\Andrew\Andrew\UPB\Certi1\Final\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 39
+   at ClinicLogic.Managers.PatientManager.GetPatients() in C:\Users\Andrew\Andrew\UPB\Certi1\Final\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 141
+   at _77737CertiP2.Controllers.PatientController.GetPatients() in C:\Users\Andrew\Andrew\UPB\Certi1\Final\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 91
+2025-05-12 18:55:14 [Error] Error retrieving patients
+System.IndexOutOfRangeException: Index was outside the bounds of the array.
+   at ClinicLogic.Managers.PatientManager.ReadAllPatients() in C:\Users\Andrew\Andrew\UPB\Certi1\Final\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 39
+   at ClinicLogic.Managers.PatientManager.GetPatients() in C:\Users\Andrew\Andrew\UPB\Certi1\Final\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 141
+   at _77737CertiP2.Controllers.PatientController.GetPatients() in C:\Users\Andrew\Andrew\UPB\Certi1\Final\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 91
+2025-05-12 18:55:25 [Information] Buscando paciente con CI 1 en el archivo ../data/patients.txt
+2025-05-12 18:55:25 [Error] Error retrieving patient
+System.IndexOutOfRangeException: Index was outside the bounds of the array.
+   at ClinicLogic.Managers.PatientManager.GetPatient(String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\Final\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 92
+   at _77737CertiP2.Controllers.PatientController.GetPatient(String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\Final\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 44

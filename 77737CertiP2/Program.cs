@@ -12,6 +12,7 @@ EnsureDataFilesExist();
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
+    .WriteTo.Console()
     .CreateLogger();
 
 // Add services to the container.

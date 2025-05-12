@@ -1,0 +1,56 @@
+2025-05-11 20:02:31 [Error] Error adding patient
+System.AggregateException: One or more errors occurred. (An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.)
+ ---> System.InvalidOperationException: An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.
+   at System.Net.Http.HttpClient.PrepareRequestMessage(HttpRequestMessage request)
+   at System.Net.Http.HttpClient.SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+   at ClinicLogic.Managers.PatientManager.GeneratePatientID(String name, String lastName, String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 141
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at ClinicLogic.Managers.PatientManager.AddPatient(Patient patient) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 66
+   at _77737CertiP2.Controllers.PatientController.PostPatient(Patient patient) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 27
+2025-05-11 20:03:07 [Error] Error adding patient
+System.AggregateException: One or more errors occurred. (An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.)
+ ---> System.InvalidOperationException: An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.
+   at System.Net.Http.HttpClient.PrepareRequestMessage(HttpRequestMessage request)
+   at System.Net.Http.HttpClient.SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+   at ClinicLogic.Managers.PatientManager.GeneratePatientID(String name, String lastName, String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 141
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at ClinicLogic.Managers.PatientManager.AddPatient(Patient patient) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 66
+   at _77737CertiP2.Controllers.PatientController.PostPatient(Patient patient) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 27
+2025-05-11 20:03:07 [Error] Error adding patient
+System.AggregateException: One or more errors occurred. (An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.)
+ ---> System.InvalidOperationException: An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.
+   at System.Net.Http.HttpClient.PrepareRequestMessage(HttpRequestMessage request)
+   at System.Net.Http.HttpClient.SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+   at ClinicLogic.Managers.PatientManager.GeneratePatientID(String name, String lastName, String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 141
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at ClinicLogic.Managers.PatientManager.AddPatient(Patient patient) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 66
+   at _77737CertiP2.Controllers.PatientController.PostPatient(Patient patient) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 27
+2025-05-11 20:03:39 [Error] Error retrieving patient
+System.Exception: Patient not found
+   at ClinicLogic.Managers.PatientManager.GetPatient(String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 94
+   at _77737CertiP2.Controllers.PatientController.GetPatient(String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 43
+2025-05-11 20:07:01 [Error] Error retrieving patient
+System.Exception: Patient not found
+   at ClinicLogic.Managers.PatientManager.GetPatient(String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 94
+   at _77737CertiP2.Controllers.PatientController.GetPatient(String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 43
+2025-05-11 20:09:36 [Error] Error adding patient
+System.AggregateException: One or more errors occurred. (An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.)
+ ---> System.InvalidOperationException: An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.
+   at System.Net.Http.HttpClient.PrepareRequestMessage(HttpRequestMessage request)
+   at System.Net.Http.HttpClient.SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+   at ClinicLogic.Managers.PatientManager.GeneratePatientID(String name, String lastName, String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 141
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at ClinicLogic.Managers.PatientManager.AddPatient(Patient patient) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 66
+   at _77737CertiP2.Controllers.PatientController.PostPatient(Patient patient) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 27
+2025-05-11 20:09:57 [Error] Error retrieving patient
+System.Exception: Patient not found
+   at ClinicLogic.Managers.PatientManager.GetPatient(String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\ClinicLogic\Managers\PatientManager.cs:line 94
+   at _77737CertiP2.Controllers.PatientController.GetPatient(String ci) in C:\Users\Andrew\Andrew\UPB\Certi1\3er parcial\project2\CertiP3\77737CertiP2\Controllers\PatientController.cs:line 43
